@@ -1,3 +1,4 @@
+{% raw %}
 ---
 # Create user and its home directory
 - name: check mandatory parameters
@@ -23,3 +24,4 @@
 - name: configure authorize_keys for {{ webapp_public_key}}
   authorized_key: user={{ webapp_username }}
                   key="{{ lookup('file', webapp_public_key ) }}"
+{% endraw %}

@@ -1,3 +1,4 @@
+{% raw %}
 ---
 - name: install necessary extra packages ({{ extra_packages }})
   apt: name={{ item }} state=present update_cache=yes cache_valid_time=3600
@@ -10,3 +11,4 @@
 #  # locale-gen
 - name: set italian locale
   locale_gen: name=it_IT.UTF-8 state=present
+{% endraw %}

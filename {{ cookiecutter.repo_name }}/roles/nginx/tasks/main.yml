@@ -1,3 +1,4 @@
+{% raw %}
 ---
 
 - name: Check mandatory parameters
@@ -18,3 +19,4 @@
 
 - name: start nginx
   service: name=nginx state=started
+{% endraw %}

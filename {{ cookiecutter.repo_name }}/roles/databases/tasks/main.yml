@@ -1,3 +1,4 @@
+{% raw %}
 ---
 - name: check mandatory parameters
   fail: msg="db_user, db_name, db_password and db_version parameters are not defined"
@@ -43,3 +44,4 @@
   when: development is defined
 
 - service: name=postgresql state=restarted
+{% endraw %}

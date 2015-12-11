@@ -1,3 +1,4 @@
+{% raw %}
 ---
 - name: install necessary packages
   apt: name={{ item }} state=present
@@ -6,3 +7,4 @@
 
 - name: start the service
   service: name=redis-server state=started
+{% endraw %}

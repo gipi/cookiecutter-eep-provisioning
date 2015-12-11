@@ -1,3 +1,4 @@
+{% raw %}
 ---
 - name: install GIT related packages
   apt: name={{ item }} state=present update_cache=yes cache_valid_time=3600
@@ -11,3 +12,4 @@
   args:
     chdir: "{{ site_web_root }}"
     creates: "{{ site_web_root}}/repo"
+{% endraw %}
