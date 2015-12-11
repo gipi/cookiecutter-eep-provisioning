@@ -1,3 +1,4 @@
+{% raw %}
 [program:uwsgi_app]
 command=/path/to/uwsgi --emperor /path/to/app/uwsgi.ini
 redirect_stderr=true
@@ -7,3 +8,4 @@ user={{ webapp_username }}
 autostart=true
 autorestart=true
 stopsignal=QUIT
+{% endraw %}

@@ -1,6 +1,7 @@
 {
     "project_name": "provisioning",
     "project_description": "",
-    "repo_name": "{{ cookiecutter.project_name|lower|replace(' ', '-') }}"
+    "repo_name": "{{ cookiecutter.project_name|lower|replace(' ', '-') }}",
+    "has_supervisor": "y"
 
 }
