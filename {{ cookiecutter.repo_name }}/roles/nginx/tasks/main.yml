@@ -1,0 +1,20 @@
+---
+
+- name: Check mandatory parameters
+  fail: msg="site_name, site_domain, site_web_root parameters are not defined"
+  when: site_name is not defined or site_domain is not defined or site_web_root is not defined
+
+- name: install package
+  apt: name={{ item }} update_cache=yes cache_valid_time=3600
+  with_items:
+    - nginx
+
+- name: create nginx configuration file (not yet enabled)
+  template:
+    src=nginx.conf.j2
+    dest=/etc/nginx/sites-available/{{ site_name }}
+  notify:
+    - restart nginx
+
+- name: start nginx
+  service: name=nginx state=started

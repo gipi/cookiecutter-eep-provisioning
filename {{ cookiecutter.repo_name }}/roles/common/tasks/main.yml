@@ -1,0 +1,12 @@
+---
+- name: install necessary extra packages ({{ extra_packages }})
+  apt: name={{ item }} state=present update_cache=yes cache_valid_time=3600
+  with_items: extra_packages
+  when: extra_packages is defined
+
+# TODO: make configurable
+# doesn't work, see issue <https://github.com/ansible/ansible-modules-extras/issues/13>
+# manually edit /etc/locale.gen
+#  # locale-gen
+- name: set italian locale
+  locale_gen: name=it_IT.UTF-8 state=present

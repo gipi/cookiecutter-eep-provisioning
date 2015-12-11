@@ -1,0 +1,13 @@
+---
+- name: install GIT related packages
+  apt: name={{ item }} state=present update_cache=yes cache_valid_time=3600
+  with_items:
+    - git-core
+
+- name: create bare repo
+  su: yes
+  su_user: "{{ webapp_username }}"
+  command: git init --bare repo
+  args:
+    chdir: "{{ site_web_root }}"
+    creates: "{{ site_web_root}}/repo"

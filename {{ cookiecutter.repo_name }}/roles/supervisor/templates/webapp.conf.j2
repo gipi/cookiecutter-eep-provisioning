@@ -1,0 +1,9 @@
+[program:uwsgi_app]
+command=/path/to/uwsgi --emperor /path/to/app/uwsgi.ini
+redirect_stderr=true
+stdout_logfile=/path/to/log
+stderr_logfile=/path/to/error_log
+user={{ webapp_username }}
+autostart=true
+autorestart=true
+stopsignal=QUIT
