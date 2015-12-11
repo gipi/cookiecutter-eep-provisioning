@@ -1,0 +1,10 @@
+---
+site_domain: '{{ site_domain }}'
+site_name: '{{ site_name }}'
+site_web_root: '{{ site_web_root }}'
+webapp_username: '{{ webapp_username }}'
+webapp_public_key: '{{ webapp_public_key }}'
+db_version: '{{ db_version }}'
+db_name: '{{ db_name }}'
+db_user: '{{ db_user }}'
+db_password: '{{ db_password }}'
