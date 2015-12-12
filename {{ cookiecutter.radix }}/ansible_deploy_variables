@@ -1,0 +1,9 @@
+---
+site_domain: '{{ cookiecutter.site_domain }}'
+site_name: '{{ cookiecutter.site_name }}'
+site_web_root: '{{ cookiecutter.site_web_root }}'
+webapp_username: '{{ cookiecutter.webapp_username }}'
+webapp_public_key: '{{ cookiecutter.webapp_public_key }}'
+db_version: '{{ cookiecutter.db_version }}'
+db_name: '{{ cookiecutter.db_name }}'
+db_user: '{{ cookiecutter.db_user }}'
