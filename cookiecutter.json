@@ -1,6 +1,6 @@
 {
     "project_name":        "my project",
-    "repo_name":           "{{ cookiecutter.project_name|lower|replace(' ', '-') }}",
+    "repo_name":           "{{ cookiecutter.project_name|lower|replace(' ', '_') }}",
     "radix":               "provision",
     "use_vagrant":         "n",
     "has_supervisor":      "y",
