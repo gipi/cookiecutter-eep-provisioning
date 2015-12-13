@@ -1,0 +1,53 @@
+{% raw %}
+#!/bin/bash
+
+readonly PROGNAME=$(basename "$0")
+readonly PROGDIR=$(readlink -m $(dirname $0))
+
+INVENTORY_FILE="ansible_vagrant_inventory"
+VARIABLES_FILE="ansible_vagrant_variables"
+PLAYBOOK="playbook.yml"
+
+
+usage() {
+    cat <<- EOF
+usage: $0 [-i <inventory>] [-v <variables>] [-h] [-t]
+EOF
+}
+
+cmdline() {
+    while getopts "htv:i:" OPTION
+    do
+         case $OPTION in
+         t)
+            set -x
+            ;;
+         v)
+            VARIABLES_FILE=$OPTARG
+             ;;
+         h)
+             usage
+             exit 0
+             ;;
+         i)
+            INVENTORY_FILE=$OPTARG
+            ;;
+         \?)
+            echo "Unknown option: -$OPTARG" >&2
+            exit 1
+            ;;
+         :) echo "Missing option argument for -$OPTARG" >&2; exit 1
+            ;;
+        esac
+    done
+
+    return 0
+}
+
+cmdline "$@"
+
+ansible-playbook                               \
+        --inventory-file="${INVENTORY_FILE}"   \
+        --extra-vars @"${VARIABLES_FILE}"      \
+        "${PLAYBOOK}"
+{% endraw %}
