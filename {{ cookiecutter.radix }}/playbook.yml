@@ -1,0 +1,9 @@
+---
+- hosts: all
+  roles:
+    - { role: common, tags: common }
+    - { role: nginx, tags: nginx }
+    - { role: databases, tags: databases }
+    - { role: webapp, tags: webapp }
+    - { role: repo,   tags: repo}
+{% if has_supervisor == "y" %}    - { role: supervisor,   tags: supervisor}{% endif %}
