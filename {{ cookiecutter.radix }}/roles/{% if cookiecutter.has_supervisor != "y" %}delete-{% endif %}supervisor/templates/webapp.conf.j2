@@ -1,9 +1,8 @@
-{% raw %}
-[program:uwsgi_app]
-command=/path/to/uwsgi --emperor /path/to/app/uwsgi.ini
+{% raw %}[program:uwsgi_app]
+command={{ site_web_root }}/.virtualenv/bin/uwsgi --emperor {{ site_web_root }}/app/uwsgi.ini
 redirect_stderr=true
-stdout_logfile=/path/to/log
-stderr_logfile=/path/to/error_log
+stdout_logfile={{ site_web_root }}/logs/uwsgi.log
+stderr_logfile={{ site_web_root }}/logs/uwsgi_error.log
 user={{ webapp_username }}
 autostart=true
 autorestart=true

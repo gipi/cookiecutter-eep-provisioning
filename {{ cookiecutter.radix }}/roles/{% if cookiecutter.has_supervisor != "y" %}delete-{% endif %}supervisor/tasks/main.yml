@@ -4,10 +4,10 @@
   with_items:
     - supervisor
 
-- name: create supervisor configuration file (not yet enabled)
+- name: create supervisor configuration file
   template:
     src=webapp.conf.j2
-    dest=/etc/supervisor/{{ site_name }}
+    dest=/etc/supervisor/conf.d/{{ site_name }}.conf
   notify:
     - restart supervisor
 {% endraw %}
