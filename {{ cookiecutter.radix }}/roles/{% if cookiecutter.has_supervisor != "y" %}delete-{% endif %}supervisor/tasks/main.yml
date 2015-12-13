@@ -1,5 +1,4 @@
-{% raw %}
----
+{% raw %}---
 - name: install necessary packages
   apt: name={{ item }} state=present
   with_items:
@@ -8,7 +7,7 @@
 - name: create supervisor configuration file (not yet enabled)
   template:
     src=webapp.conf.j2
-    dest=/etc/supervisord/{{ site_name }}
+    dest=/etc/supervisor/{{ site_name }}
   notify:
     - restart supervisor
 {% endraw %}
