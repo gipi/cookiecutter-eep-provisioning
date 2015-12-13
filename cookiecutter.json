@@ -11,5 +11,5 @@
     "webapp_public_key":   "",
     "db_version":          "9.4",
     "db_name":             "db_{{ cookiecutter.repo_name }}",
-    "db_user":             "db_{{ cookiecutter.webapp_username }}"
+    "db_user":             "{{cookiecutter.repo_name}}user"
 }
