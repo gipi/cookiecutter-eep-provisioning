@@ -1,3 +1,4 @@
+{% raw %}
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
@@ -28,3 +29,4 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # allow access as root
   config.vm.provision "shell", inline: "mkdir -p /root/.ssh && chmod 600 /root/.ssh && cp /home/vagrant/.ssh/authorized_keys /root/.ssh/"
 end
+{% endraw %}
