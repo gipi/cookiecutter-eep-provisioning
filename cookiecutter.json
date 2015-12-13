@@ -3,6 +3,7 @@
     "repo_name":           "{{ cookiecutter.project_name|lower|replace(' ', '_') }}",
     "radix":               "provision",
     "has_vagrant":         "y",
+    "has_git":             "n",
     "has_supervisor":      "y",
     "site_domain":         "example.com",
     "site_name":           "example",

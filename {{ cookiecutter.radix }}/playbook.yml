@@ -5,5 +5,5 @@
     - { role: nginx, tags: nginx }
     - { role: databases, tags: databases }
     - { role: webapp, tags: webapp }
-    - { role: repo,   tags: repo}
-{% if has_supervisor == "y" %}    - { role: supervisor,   tags: supervisor}{% endif %}
+{% if cookiecutter.has_git == "y" %}    - { role: repo,   tags: repo }{% endif %}
+{% if cookiecutter.has_supervisor == "y" %}    - { role: supervisor,   tags: supervisor }{% endif %}
