@@ -14,6 +14,11 @@ files following your taste and then
 To manage the running state of ``uwsgi`` we are using a [supervisor](https://supervisord.readthedocs.org/en/latest/)
 configuration script in ``/etc/supervisor/{{ site_name }}.conf``.
 
+It's possible to restart the app thanks to a ``sudo`` configuration that allows
+certain commands on ``supervisorctl``.
+
+    $ sudo /usr/bin/supervisorctl restart uwsgi_{{ site_name }}
+
 {% endif %}
 
 ## Ansible
