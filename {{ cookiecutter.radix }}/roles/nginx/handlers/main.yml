@@ -1,5 +1,4 @@
-{% raw %}
----
+{% raw %}---
 - name: restart nginx
   service:  name=nginx state=restarted
 {% endraw %}
