@@ -10,4 +10,7 @@
     dest=/etc/supervisor/conf.d/{{ site_name }}.conf
   notify:
     - restart supervisor
+
+- name: enforce supervisor running state
+  service: name=supervisor state=running enabled=yes
 {% endraw %}
