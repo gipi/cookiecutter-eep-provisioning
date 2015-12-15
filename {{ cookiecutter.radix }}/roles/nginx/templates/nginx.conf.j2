@@ -29,12 +29,11 @@ server {
         }
 
         location / {
-                proxy_pass http://127.0.0.1:8000;
-                proxy_set_header X-Forwarded-Host $server_name;
-                proxy_set_header X-Real-IP $remote_addr;
-                proxy_set_header X-Forwarded-Proto https;
+            uwsgi_pass unix:/tmp/uwsgi_{{ site_name }}.sock;
+            include /etc/nginx/uwsgi_params;
 
-                add_header P3P 'CP="ALL DSP COR PSAa PSDa OUR NOR ONL UNI COM NAV"';
+            # add missing header as proxy_pass
+            #add_header P3P 'CP="ALL DSP COR PSAa PSDa OUR NOR ONL UNI COM NAV"';
         }
 }
 {% endraw %}
