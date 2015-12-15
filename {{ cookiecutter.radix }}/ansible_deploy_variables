@@ -6,3 +6,8 @@ webapp_username: '{{ cookiecutter.webapp_username }}'
 db_version: '{{ cookiecutter.db_version }}'
 db_name: '{{ cookiecutter.db_name }}'
 db_user: '{{ cookiecutter.db_user }}'
+extra_packages:
+  - build-essential
+  - python-virtualenv
+  - python-dev
+
