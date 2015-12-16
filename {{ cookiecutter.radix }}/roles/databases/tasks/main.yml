@@ -1,5 +1,4 @@
-{% raw %}
----
+{% raw %}---
 - name: check mandatory parameters
   fail: msg="db_user, db_name, db_password and db_version parameters are not defined"
   when: db_user is not defined or db_name is not defined or db_password is not defined or db_version is not defined
