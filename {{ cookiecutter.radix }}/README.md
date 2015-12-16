@@ -34,3 +34,9 @@ to do a simple
 
 {% endif %}
 
+## Nginx
+
+The web server listen only ``HTTPS`` (un-encrypted requests are redirect to encrypted ones).
+
+It's configured to use self-signed certificate, the real one must be generated and certificate
+and private key be in the correct places (look at ``/etc/nginx/site-available/{{ cookiecutter.site_name }}``).

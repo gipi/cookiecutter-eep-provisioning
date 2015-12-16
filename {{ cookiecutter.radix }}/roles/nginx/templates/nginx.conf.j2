@@ -7,13 +7,14 @@ server {
 
 server {
         listen 443 default ssl;
-        # TODO: place its own certificates
-        ssl_certificate /etc/ssl/certs/{{ site_domain }}_chain.pem;
-        ssl_certificate_key /etc/ssl/private/{{ site_domain }};
 
         access_log /var/log/nginx/{{ site_domain }}.access.log;
         error_log /var/log/nginx/{{ site_domain }}.error.log;
 
+        # this below are certificates to be substituted
+        include snippets/snakeoil.conf;
+        #ssl_certificate /etc/ssl/certs/{{ site_domain }}_chain.pem;
+        #ssl_certificate_key /etc/ssl/private/{{ site_domain }};
         server_name {{ site_domain }};
 
         # allow for 5M upload
