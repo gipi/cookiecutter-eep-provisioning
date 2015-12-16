@@ -10,4 +10,4 @@ extra_packages:
   - build-essential
   - python-virtualenv
   - python-dev
-
+  - vim
