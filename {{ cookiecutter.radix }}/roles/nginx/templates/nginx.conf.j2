@@ -17,7 +17,7 @@ server {
         #ssl_certificate /etc/ssl/certs/{{ site_domain }}_chain.pem;
         #ssl_certificate_key /etc/ssl/private/{{ site_domain }};
 
-        # allow for 5M upload
+        # allow for 2M upload
         client_max_body_size 2M;
 
         location /static/ {
