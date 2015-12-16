@@ -14,3 +14,23 @@ provisioning and launch
 
 You will be asked some question about your project name and stuffs.
 
+## Variables
+
+These are the defined variables
+
+* ``project_name``: project for which is the provisioning
+* ``repo_name``: like project name but slugified
+* ``radix``: directory where place all the stuffs (default "provision")
+* ``has_vagrant``
+* ``has_git``
+* ``has_supervisor``
+* ``has_redis``
+* ``site_domain``:
+* ``site_name``:
+* ``site_web_root``:
+* ``webapp_username``:
+* ``webapp_public_key``: ``ssh`` public key to use (if empty a new one will be generated)
+* ``db_version``:
+* ``db_name``:
+* ``db_user``:
+
