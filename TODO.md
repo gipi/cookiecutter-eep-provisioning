@@ -7,3 +7,5 @@
  - generate ``uwsgi.ini`` file
  - print a message at the end of the creation telling the user of copying some file
    into the main repo (mainly ``uwsgi.ini``).
+ - make locale configurable.
+ - choose between ``site_name`` and ``project_name`` as naming variable.
