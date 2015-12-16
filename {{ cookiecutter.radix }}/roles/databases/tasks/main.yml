@@ -43,5 +43,5 @@
     owner="{{ db_user }}"
   when: development is defined
 
-- service: name=postgresql state=restarted
+- service: name=postgresql state=started
 {% endraw %}
