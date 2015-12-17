@@ -1,5 +1,4 @@
-{% raw %}
----
+{% raw %}---
 
 - name: Check mandatory parameters
   fail: msg="site_name, site_domain, site_web_root parameters are not defined"
