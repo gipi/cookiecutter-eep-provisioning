@@ -5,6 +5,7 @@
     "has_vagrant":         "y",
     "has_git":             "n",
     "has_supervisor":      "y",
+    "has_redis":           "n",
     "site_domain":         "example.com",
     "site_name":           "example",
     "site_web_root":       "/var/www/{{ cookiecutter.repo_name }}",
