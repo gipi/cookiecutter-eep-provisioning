@@ -8,7 +8,7 @@
     "has_redis":           "n",
     "site_domain":         "example.com",
     "site_name":           "example",
-    "site_web_root":       "/var/www/{{ cookiecutter.repo_name }}",
+    "site_web_root":       "/var/www/{{ cookiecutter.site_name }}",
     "webapp_username":     "{{ cookiecutter.repo_name }}",
     "webapp_public_key":   "",
     "db_version":          "9.4",
