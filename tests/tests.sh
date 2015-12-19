@@ -54,7 +54,8 @@ set -o nounset
 
 running_log cookiecutter
 pip install cookiecutter
-cookiecutter --no-input "${COOKIECUTTER_DIR}"
+# use the programmatic way in order to change some defaults
+python -c 'from cookiecutter.main import cookiecutter;cookiecutter("'${COOKIECUTTER_DIR}'", no_input=True, extra_context={"has_redis": "y"});'
 
 cd provision
 running_log vagrant
