@@ -6,6 +6,14 @@
 set -o nounset
 set -o errexit
 
+function running_log() {
+    echo -e "\e[32m\e[1m$1\e[0m"
+}
+
+function failure_msg() {
+    echo -e "\e[31m\e[1m$1\e[0m"
+}
+
 function webuser_cmd() {
     ssh -i id_rsa_my_project \
         my_project@127.0.0.1 -p 2222 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \
@@ -22,7 +30,7 @@ function webuser_scp_app() {
 readonly TTTT="$(netstat -ltp 2>/dev/null | grep ':2222')"
 
 test -n "${TTTT}" && {
-    echo 'port 2222 already listening'
+    failure_msg 'port 2222 already listening'
     exit 1
 }
 
@@ -34,16 +42,22 @@ readonly COOKIECUTTER_DIR="$(readlink -f ${DIR}/..)"
 # directory where we output the cookiecutter
 readonly TEMP_DIR="$(mktemp -d)"
 
+running_log "creating temporary directory and entering it"
 cd "${TEMP_DIR}"
 
+
+running_log "virtualenv"
 virtualenv --no-site-packages .virtualenv
 set +o nounset # https://github.com/pypa/virtualenv/issues/150
 source .virtualenv/bin/activate
 set -o nounset
+
+running_log cookiecutter
 pip install cookiecutter
 cookiecutter --no-input "${COOKIECUTTER_DIR}"
 
 cd provision
+running_log vagrant
 vagrant up --provider=virtualbox
 # ansible doesn't play well with the virtualenv
 set +o nounset # https://github.com/pypa/virtualenv/issues/150
@@ -52,8 +66,10 @@ set -o nounset
 
 ln -s ansible_deploy_variables ansible_vagrant_variables
 
+running_log provisioning
 ./bin/ansible
 
+running_log deploy
 # do a fake deploy
 webuser_cmd virtualenv --no-site-packages .virtualenv
 webuser_cmd "source .virtualenv/bin/activate && pip install uwsgi celery redis"
