@@ -5,6 +5,11 @@ from app.tasks import very_long_task
 from cgi import parse_qs, escape
 import random
 import string
+import logging
+
+
+logging.basicConfig()
+logger = logging.getLogger(__name__)
 
 
 # https://stackoverflow.com/questions/14355409/getting-the-upload-file-content-to-wsgi
