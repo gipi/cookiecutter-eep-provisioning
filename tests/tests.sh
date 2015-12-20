@@ -81,4 +81,9 @@ webuser_cmd sudo /usr/bin/supervisorctl restart uwsgi_example
 echo 'temporary directory at '${TEMP_DIR}/provision
 echo go to https://192.168.33.10/
 
+function destroy_provision() {
+    vagrant destroy --force
+}
+
+export -f destroy_provision
 
