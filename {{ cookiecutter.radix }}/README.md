@@ -32,6 +32,14 @@ to do a simple
 
     $ vagrant up --provider virtualbox
 
+If you want to login with the user
+
+    $ ssh -i id_rsa_my_project my_project@127.0.0.1 -p 2222 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
+
+If you want to copy something inside you can do
+
+    $ scp -i id_rsa_my_project -P 2222 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no foobar.py  my_project@127.0.0.1:app/
+
 {% endif %}
 
 ## Nginx

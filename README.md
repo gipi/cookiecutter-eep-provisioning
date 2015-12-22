@@ -34,3 +34,9 @@ These are the defined variables
 * ``db_name``:
 * ``db_user``:
 
+## Tests
+
+It's possible to do a quick test with the script ``tests/tests.sh`` that create
+a temporary directory and launch ``cookiecutter`` with the actual state of the
+repository and tries to configure a simple ``wsgi`` application with a ``celery``
+task associated.

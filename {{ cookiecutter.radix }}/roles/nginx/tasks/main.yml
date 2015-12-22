@@ -17,7 +17,7 @@
     - restart nginx
 
 - name: enable site
-  file: src=/etc/nginx/site-available/{{ site_name}} dst=/etc/nginx/site-enabled/{{ site_name }} state=link
+  file: src=/etc/nginx/sites-available/{{ site_name}} dest=/etc/nginx/sites-enabled/{{ site_name }} state=link force=yes
 
 - name: start nginx
   service: name=nginx state=started
