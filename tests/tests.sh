@@ -96,3 +96,5 @@ function destroy_provision() {
 
 export -f destroy_provision
 
+/bin/bash 
+
