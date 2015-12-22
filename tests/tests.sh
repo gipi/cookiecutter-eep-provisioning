@@ -76,6 +76,8 @@ webuser_cmd virtualenv --no-site-packages .virtualenv
 webuser_cmd "source .virtualenv/bin/activate && pip install uwsgi celery redis"
 webuser_scp_app "${DIR}"/app/*
 webuser_scp_app uwsgi.ini
+# activate the celery daemon
+webuser_cmd sed --in-place '"s/^\(# \)\(attach-daemon2\)/\2/"' app/uwsgi.ini
 webuser_cmd sudo /usr/bin/supervisorctl restart uwsgi_example
 
 echo 'temporary directory at '${TEMP_DIR}/provision
