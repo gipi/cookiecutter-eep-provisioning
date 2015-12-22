@@ -53,13 +53,16 @@ source .virtualenv/bin/activate
 set -o nounset
 
 running_log cookiecutter
+(
 pip install cookiecutter
 # use the programmatic way in order to change some defaults
 python -c 'from cookiecutter.main import cookiecutter;cookiecutter("'${COOKIECUTTER_DIR}'", no_input=True, extra_context={"has_redis": "y"});'
-
+) | sed 's/^/    /' 
 cd provision
 running_log vagrant
+(
 vagrant up --provider=virtualbox
+) | sed 's/^/    /' 
 # ansible doesn't play well with the virtualenv
 set +o nounset # https://github.com/pypa/virtualenv/issues/150
 deactivate
@@ -68,9 +71,12 @@ set -o nounset
 ln -s ansible_deploy_variables ansible_vagrant_variables
 
 running_log provisioning
+(
 ./bin/ansible
+) | sed 's/^/    /' 
 
 running_log deploy
+(
 # do a fake deploy
 webuser_cmd virtualenv --no-site-packages .virtualenv
 webuser_cmd "source .virtualenv/bin/activate && pip install uwsgi celery redis"
@@ -79,6 +85,7 @@ webuser_scp_app uwsgi.ini
 # activate the celery daemon
 webuser_cmd sed --in-place '"s/^\(# \)\(attach-daemon2\)/\2/"' app/uwsgi.ini
 webuser_cmd sudo /usr/bin/supervisorctl restart uwsgi_example
+) | sed 's/^/    /'
 
 echo 'temporary directory at '${TEMP_DIR}/provision
 echo go to https://192.168.33.10/
