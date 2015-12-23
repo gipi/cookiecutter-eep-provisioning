@@ -1,5 +1,5 @@
 {% raw %}[program:uwsgi_{{ site_name }}]
-command={{ site_web_root }}/.virtualenv/bin/uwsgi --ini {{ site_web_root }}/app/uwsgi.ini --processes 1 --need-app --uid {{ webapp_username }} --gid {{ webapp_username}} --chown-socket {{ webapp_username }}:www-data --chmod-socket=660
+command={{ site_web_root }}/.virtualenv/bin/uwsgi --ini {{ site_web_root }}/app/uwsgi.ini --processes 1 --need-app --uid {{ webapp_username }} --gid {{ webapp_username}} --chown-socket www-data:{{ webapp_username }} --chmod-socket=660
 redirect_stderr=true
 stdout_logfile={{ site_web_root }}/logs/uwsgi.log
 stderr_logfile={{ site_web_root }}/logs/uwsgi_error.log
