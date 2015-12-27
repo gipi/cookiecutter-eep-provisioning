@@ -104,7 +104,21 @@ function destroy_provision() {
     vagrant destroy --force
 }
 
+function sshme() {
+    ssh -i id_rsa_my_project my_project@127.0.0.1 -p 2222 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
+}
+
 export -f destroy_provision
+export -f sshme
+
+cat <<EOF
+
+ now you are into the provisioning directory, you can use "sshme" to enter
+ as the web application user.
+
+ At the end remember to destroy the vagrant instance with "destroy_provision".
+
+EOF
 
 /bin/bash 
 
