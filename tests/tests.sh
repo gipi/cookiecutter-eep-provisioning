@@ -5,6 +5,7 @@
 # web application with a celery task connected to it.
 set -o nounset
 set -o errexit
+set -o pipefail
 
 function check_prog() {
     which $1 > /dev/null || {
