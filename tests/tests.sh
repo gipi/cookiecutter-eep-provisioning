@@ -6,6 +6,26 @@
 set -o nounset
 set -o errexit
 
+function check_prog() {
+    which $1 > /dev/null || {
+        failure_msg "missing dependency: "$1
+        exit 1
+    }
+}
+
+# check that all the progs are installed and port are free
+function check_environment() {
+    check_prog virtualbox
+    check_prog vagrant
+    check_prog ansible-playbook
+    # check if someone (vagrant) is already listening to post 2222
+    readonly TTTT="$(netstat -ltp 2>/dev/null | grep ':2222')"
+
+    test -n "${TTTT}" && {
+        failure_msg 'port 2222 already listening'
+        exit 1
+    } || true # this is needed for weird behaviour of errexit
+}
 function running_log() {
     echo -e "\e[32m\e[1m$1\e[0m"
 }
@@ -26,13 +46,7 @@ function webuser_scp_app() {
         "$@" my_project@127.0.0.1:app/
 }
 
-# check if someone (vagrant) is already listening to post 2222
-readonly TTTT="$(netstat -ltp 2>/dev/null | grep ':2222')"
-
-test -n "${TTTT}" && {
-    failure_msg 'port 2222 already listening'
-    exit 1
-}
+check_environment
 
 # http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
 readonly DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
