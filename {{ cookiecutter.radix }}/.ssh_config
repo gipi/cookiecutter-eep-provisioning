@@ -1,0 +1,9 @@
+Host {{ cookiecutter.site_name }}
+  HostName {{ cookiecutter.site_domain }}
+  User {{ cookiecutter.webapp_username }}
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  PasswordAuthentication no
+  IdentityFile {{ cookiecutter.webapp_public_key }}
+  IdentitiesOnly yes
+  LogLevel FATAL
