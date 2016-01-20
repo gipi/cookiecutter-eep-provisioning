@@ -5,14 +5,15 @@ import subprocess
 from fabric.contrib.files import is_link
 from fabric.utils import abort
 import os
-from fabric.context_managers import show, settings, cd, prefix
+from fabric.context_managers import show, settings, cd, prefix, lcd
 from fabric.contrib import files
 from fabric.operations import run, sudo, get, local, put, open_shell
 from fabric.state import env
 from fabric.api import task
 
+PROJECT_ROOT_DIR = os.path.join(os.path.dirname(__file__))
 REMOTE_REVISION = None
-RELEASES_DIR = 'releases'
+RELEASES_RELATIVE_PATH_DIR = 'releases'
 
 env.use_ssh_config = True
 
@@ -40,8 +41,9 @@ def esudo(*args, **kwargs):
 # http://docs.fabfile.org/en/latest/usage/execution.html#roles
 
 def describe_revision(head='HEAD'):
-    actual_tag = local('git describe --always %s' % head, capture=True)
-    return actual_tag
+    with lcd(PROJECT_ROOT_DIR):
+        actual_tag = local('git describe --always %s' % head, capture=True)
+        return actual_tag
 
 def get_dump_filepath(user, prefix=u'backups'):
     return '%s/%s.sql' % (prefix, get_remote_revision(user))
@@ -50,7 +52,7 @@ def get_release_filename():
     return '%s.tar.gz' % describe_revision()
 
 def get_release_filepath():
-    return os.path.join(RELEASES_DIR, get_release_filename())
+    return os.path.join(PROJECT_ROOT_DIR, RELEASES_RELATIVE_PATH_DIR, get_release_filename())
 
 @task
 def dump_db_snapshot(db_name, user):
@@ -73,11 +75,12 @@ def load_db_snapshot(db_name, username):
 
 @task
 def create_release_archive(head='HEAD'):
-    local('mkdir -p %s' % RELEASES_DIR)
-    local('git archive --worktree-attributes --format=tar.gz %s > %s' % (
-        head,
-        get_release_filepath()
-    ))
+    with lcd(PROJECT_ROOT_DIR):
+        local('mkdir -p %s' % RELEASES_RELATIVE_PATH_DIR)
+        local('git archive --worktree-attributes --format=tar.gz %s > %s' % (
+            head,
+            get_release_filepath()
+        ))
 
 def sync_virtualenv(virtualenv_path, requirements_path):
     if not files.exists(virtualenv_path):
