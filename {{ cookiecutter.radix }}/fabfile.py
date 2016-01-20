@@ -1,5 +1,6 @@
 import hashlib
 import shlex
+import tarfile
 import subprocess
 from fabric.contrib.files import is_link
 from fabric.utils import abort
@@ -206,9 +207,11 @@ def _release(archive, revision=None, web_root=None, **kwargs):
 #       probably with pre-steps and post-steps
 @task
 def release(head='HEAD', web_root=None, requirements=u'requirements.txt', envpath='.env', steps=None):
-    if not os.path.isfile(requirements):
-        raise ValueError('%s does not exist' % requirements)
+    '''Main task for releasing.
 
+    Unarchive the release in the webroot, sync_virtualenv and update the app/ directory
+    to point to the new release and archive in old/.
+    '''
     steps = validate_steps(steps) if steps else []
 
     cwd = erun('pwd').stdout if not web_root else web_root
@@ -221,13 +224,24 @@ def release(head='HEAD', web_root=None, requirements=u'requirements.txt', envpat
     create_release_archive(head)
     release_filename = get_release_filename()
 
+    local_release_filepath = get_release_filepath()
+
     actual_version = describe_revision(head)
     previous_version = None
 
+    # check that the archive contains the requirements file
+    tf = tarfile.open(local_release_filepath)
+    try:
+        tf.getmember(requirements)
+    except KeyError as e:
+        abort('file \'%s\' doesn\'t exist, indicate a requirements file contained into the release archive' % requirements)
+    finally:
+        tf.close()
+
+
     # and upload it to the server
     if not files.exists(release_filename):
-        put(local_path=get_release_filepath())
-
+        put(local_path=local_release_filepath)
 
     app_dir = os.path.abspath(os.path.join(cwd, 'app-%s' % describe_revision(head)))
     virtualenv_path = os.path.abspath(os.path.join(cwd, '.virtualenv'))
