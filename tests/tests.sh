@@ -86,9 +86,9 @@ running_log provisioning
 
 running_log deploy
 # do a fake deploy
-pip install fabric
+#pip install fabric
 
-./bin/deploy -i id_rsa_my_project --user my_project -H 192.168.33.10
+#./bin/deploy -i id_rsa_my_project --user my_project -H 192.168.33.10
 webuser_cmd virtualenv --no-site-packages .virtualenv
 webuser_cmd "source .virtualenv/bin/activate && pip install uwsgi celery redis"
 webuser_scp_app "${DIR}"/app/*
