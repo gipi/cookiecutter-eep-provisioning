@@ -90,7 +90,7 @@ set -o nounset
 ln -s ansible_deploy_variables ansible_vagrant_variables
 
 running_log provisioning
-./bin/ansible
+./bin/provision
 
 running_log deploy
 # do a fake deploy
