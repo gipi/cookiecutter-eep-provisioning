@@ -47,6 +47,13 @@ function webuser_scp_app() {
         "$@" my_project@127.0.0.1:app/
 }
 
+function cookiecutterme() {
+    cd "${TEMP_DIR}" # just in case is recalled after the first time
+    pip install cookiecutter
+    python -c 'from cookiecutter.main import cookiecutter;cookiecutter("'${COOKIECUTTER_DIR}'", no_input=True, overwrite_if_exists=True, extra_context={"has_redis": "y"});'
+    cd -
+}
+
 check_environment
 
 # http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
@@ -56,6 +63,9 @@ readonly COOKIECUTTER_DIR="$(readlink -f ${DIR}/..)"
 
 # directory where we output the cookiecutter
 readonly TEMP_DIR="$(mktemp -d)"
+
+export TEMP_DIR
+export COOKIECUTTER_DIR
 
 running_log "creating temporary directory and entering it"
 cd "${TEMP_DIR}"
@@ -68,9 +78,7 @@ source .virtualenv/bin/activate
 set -o nounset
 
 running_log cookiecutter
-pip install cookiecutter
-# use the programmatic way in order to change some defaults
-python -c 'from cookiecutter.main import cookiecutter;cookiecutter("'${COOKIECUTTER_DIR}'", no_input=True, extra_context={"has_redis": "y"});'
+cookiecutterme
 cd provision
 running_log vagrant
 vagrant up --provider=virtualbox
@@ -108,17 +116,25 @@ function sshme() {
     ssh -i id_rsa_my_project my_project@127.0.0.1 -p 2222 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
 }
 
-export -f destroy_provision
-export -f sshme
-
 cat <<EOF
 
  now you are into the provisioning directory, you can use "sshme" to enter
  as the web application user.
 
+ You can use "cookiecutterme" to update the generated cookiecutter template.
+
  At the end remember to destroy the vagrant instance with "destroy_provision".
 
 EOF
+
+# reactivate the virtualenv
+set +o nounset # https://github.com/pypa/virtualenv/issues/150
+source "${TEMP_DIR}/.virtualenv/bin/activate"
+set -o nounset
+
+export -f destroy_provision
+export -f cookiecutterme
+export -f sshme
 
 /bin/bash 
 
