@@ -4,9 +4,10 @@ set -e
 readonly PROGNAME=$(basename "$0")
 readonly PROGDIR=$(readlink -m $(dirname $0))
 
-INVENTORY_FILE="ansible_vagrant_inventory"
-VARIABLES_FILE="ansible_vagrant_variables"
-PLAYBOOK="playbook.yml"
+# as default use the file in the provision directory
+INVENTORY_FILE="${PROGDIR}/../ansible_vagrant_inventory"
+VARIABLES_FILE="${PROGDIR}/../ansible_vagrant_variables"
+PLAYBOOK="${PROGDIR}/../playbook.yml"
 
 
 usage() {
