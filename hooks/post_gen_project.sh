@@ -11,8 +11,12 @@ EOF
 # generate ssh key for the deploy with empty passphrase
 {% if cookiecutter.webapp_public_key == "" %}
 KEYNAME="id_rsa_{{ cookiecutter.repo_name }}"
-ssh-keygen -f "${KEYNAME}" -N ""
-cat >> ansible_deploy_variables <<EOF
+
+# do not overwrite existing key
+test -f "${KEYNAME}" || {
+    ssh-keygen -f "${KEYNAME}" -N ""
+    cat >> ansible_deploy_variables <<EOF
 webapp_public_key: '${KEYNAME}.pub'
 EOF
+}
 {% endif %}
