@@ -1,4 +1,5 @@
 {% raw %}#!/bin/bash
+set -e
 
 readonly PROGNAME=$(basename "$0")
 readonly PROGDIR=$(readlink -m $(dirname $0))
