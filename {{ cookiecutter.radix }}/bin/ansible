@@ -11,12 +11,12 @@ PLAYBOOK="playbook.yml"
 
 usage() {
     cat <<- EOF
-usage: $0 [-i <inventory>] [-v <variables>] [-h] [-t]
+usage: $0 [-i <inventory>] [-v <variables>] [-p <playbook>] [-h] [-t]
 EOF
 }
 
 cmdline() {
-    while getopts "htv:i:" OPTION
+    while getopts "htv:i:p:" OPTION
     do
          case $OPTION in
          t)
@@ -31,6 +31,9 @@ cmdline() {
              ;;
          i)
             INVENTORY_FILE=$OPTARG
+            ;;
+         p)
+            PLAYBOOK=$OPTARG
             ;;
          \?)
             echo "Unknown option: -$OPTARG" >&2
