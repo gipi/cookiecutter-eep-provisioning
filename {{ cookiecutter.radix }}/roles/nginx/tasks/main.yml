@@ -8,6 +8,7 @@
   apt: name={{ item }} update_cache=yes cache_valid_time=3600
   with_items:
     - nginx
+    - nginx-common
 
 - name: create nginx configuration file
   template:
