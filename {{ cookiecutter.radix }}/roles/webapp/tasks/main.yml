@@ -17,7 +17,6 @@
 - name: Creates webroot app
   file: path={{ site_web_root }}/{{ item }} state=directory owner={{ webapp_username }}
   with_items:
-    - app
     - static
     - media
     - logs
