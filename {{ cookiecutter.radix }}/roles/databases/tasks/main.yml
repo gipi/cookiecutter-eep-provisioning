@@ -15,8 +15,8 @@
     LANG: 'it_IT.UTF-8'
 
 - name: create database
-  su: yes
-  su_user: postgres
+  become: yes
+  become_user: postgres
   postgresql_db:
       name="{{ db_name }}"
       encoding='UTF-8'
@@ -26,8 +26,8 @@
 
 # https://groups.google.com/forum/#!topic/ansible-project/IknBo5QvJXQ
 - name: create database user {% if development is defined %}(development mode){% endif %}
-  su: yes
-  su_user: postgres
+  become: yes
+  become_user: postgres
   postgresql_user:
       db="{{ db_name }}"
       user="{{ db_user }}"
@@ -35,8 +35,8 @@
       role_attr_flags={% if development is not defined %}NO{% endif %}CREATEDB,NOSUPERUSER
 
 - name: grant privileges to user [DEVELOPMENT ENABLED]
-  su: yes
-  su_user: postgres
+  become: yes
+  become_user: postgres
   postgresql_db:
     name="{{ db_name }}"
     owner="{{ db_user }}"
