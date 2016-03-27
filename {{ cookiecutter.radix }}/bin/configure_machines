@@ -1,41 +1,57 @@
-{% raw %}#!/bin/bash
-set -e
+{% raw %}
+#!/bin/bash
+#
+# All the mumbo-jumbo with the paths is for be sure that the paths
+# passed from command line are relative from the working directory at
+# the time of launch, while the default values are with respect to
+# the provisioning files directory
 
 readonly PROGNAME=$(basename "$0")
 # http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
 readonly PROGDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# as default use the file in the provision directory
-INVENTORY_FILE="${PROGDIR}/../ansible_vagrant_inventory"
-VARIABLES_FILE="${PROGDIR}/../ansible_vagrant_variables"
-PLAYBOOK="${PROGDIR}/../playbook.yml"
+PROVISION_DIR="${PROGDIR}/../"
 
+INVENTORY_FILE="${PROVISION_DIR}ansible_vagrant_inventory"
+VARIABLES_FILE="${PROVISION_DIR}ansible_vagrant_variables"
+PLAYBOOK="${PROVISION_DIR}playbook.yml"
+
+
+ANSIBLE_EXTRA_ARGS=""
 
 usage() {
     cat <<- EOF
-usage: $0 [-i <inventory>] [-v <variables>] [-p <playbook>] [-h] [-t]
+usage: $0 [-i <inventory>] [-v <variables>] [-h] [-d] [-l] [-s] [-p]
 EOF
 }
 
 cmdline() {
-    while getopts "htv:i:p:" OPTION
+    while getopts "hdsplv:i:" OPTION
     do
          case $OPTION in
-         t)
+         d)
             set -x
             ;;
          v)
-            VARIABLES_FILE=$OPTARG
+            VARIABLES_FILE=$PWD/$OPTARG
              ;;
          h)
              usage
              exit 0
              ;;
-         i)
-            INVENTORY_FILE=$OPTARG
+         l)
+            ANSIBLE_EXTRA_ARGS=${ANSIBLE_EXTRA_ARGS}" --connection=local"
+
+            echo -e "\n [I] use -p if if failing for sudo/password stuffs\n"
+            ;;
+         s)
+            ANSIBLE_EXTRA_ARGS=${ANSIBLE_EXTRA_ARGS}" --become"
             ;;
          p)
-            PLAYBOOK=$OPTARG
+            ANSIBLE_EXTRA_ARGS=${ANSIBLE_EXTRA_ARGS}" --ask-become-pass"
+            ;;
+         i)
+            INVENTORY_FILE=$PWD/$OPTARG
             ;;
          \?)
             echo "Unknown option: -$OPTARG" >&2
@@ -51,8 +67,13 @@ cmdline() {
 
 cmdline "$@"
 
-ansible-playbook                               \
+# we change cwd so that the vagrant key is correctly found
+cd $PROVISION_DIR
+
+exec ansible-playbook                               \
         --inventory-file="${INVENTORY_FILE}"   \
         --extra-vars @"${VARIABLES_FILE}"      \
+        ${ANSIBLE_EXTRA_ARGS}                  \
         "${PLAYBOOK}"
+
 {% endraw %}
