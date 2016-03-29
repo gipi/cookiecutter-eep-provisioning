@@ -19,17 +19,9 @@ function check_prog() {
 
 # check that all the progs are installed and port are free
 function check_environment() {
-    check_prog virtualbox
-    check_prog vagrant
     check_prog ansible-playbook
-    # check if someone (vagrant) is already listening to post 2222
-    readonly TTTT="$(netstat -ltp 2>/dev/null | grep ':2222')"
-
-    test -n "${TTTT}" && {
-        failure_msg 'port 2222 already listening'
-        exit 1
-    } || true # this is needed for weird behaviour of errexit
 }
+
 function running_log() {
     echo -e "\e[32m\e[1m$1\e[0m"
 }
@@ -82,15 +74,8 @@ set -o nounset
 
 running_log cookiecutter
 cookiecutterme
-cd provision
-running_log vagrant
-vagrant up --provider=virtualbox
-# ansible doesn't play well with the virtualenv
-set +o nounset # https://github.com/pypa/virtualenv/issues/150
-deactivate
-set -o nounset
 
-ln -s ansible_deploy_variables ansible_vagrant_variables
+( cd provision && ln -s ansible_deploy_variables ansible_vagrant_variables )
 
 running_log provisioning
 ./provision/bin/configure_machines -l -s
@@ -110,10 +95,6 @@ webuser_cmd sudo /usr/bin/supervisorctl restart uwsgi_example
 
 echo 'temporary directory at '${TEMP_DIR}/provision
 echo go to https://192.168.33.10/
-
-function destroy_provision() {
-    vagrant destroy --force
-}
 
 function sshme() {
     ssh -i id_rsa_my_project my_project@127.0.0.1 -p 2222 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
