@@ -45,7 +45,7 @@ function webuser_scp_app() {
 function cookiecutterme() {
     cd "${TEMP_DIR}" # just in case is recalled after the first time
     pip install cookiecutter
-    python -c 'from cookiecutter.main import cookiecutter;cookiecutter("'${COOKIECUTTER_DIR}'", no_input=True, overwrite_if_exists=True, extra_context={"has_redis": "y"});'
+    python -c 'from cookiecutter.main import cookiecutter;cookiecutter("'${COOKIECUTTER_DIR}'", no_input=True, overwrite_if_exists=True, extra_context={"has_redis": "y", "site_web_root": "'${TEMP_WEB_ROOT}'"});'
     cd -
 }
 
@@ -58,6 +58,8 @@ readonly COOKIECUTTER_DIR="$(readlink -f ${DIR}/..)"
 
 # directory where we output the cookiecutter
 readonly TEMP_DIR="$(mktemp -d)"
+readonly TEMP_WEB_ROOT=${TEMP_DIR}/webroot/
+
 
 export TEMP_DIR
 export COOKIECUTTER_DIR
