@@ -13,7 +13,8 @@ server {
         error_log /var/log/nginx/{{ site_domain }}.error.log;
 
         # this below are certificates to be substituted
-        include snippets/snakeoil.conf;
+        ssl_certificate /etc/ssl/certs/ssl-cert-snakeoil.pem;
+        ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
         #ssl_certificate /etc/ssl/certs/{{ site_domain }}_chain.pem;
         #ssl_certificate_key /etc/ssl/private/{{ site_domain }};
 

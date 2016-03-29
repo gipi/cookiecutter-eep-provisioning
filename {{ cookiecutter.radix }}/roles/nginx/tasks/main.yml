@@ -9,6 +9,7 @@
   with_items:
     - nginx
     - nginx-common
+    - ssl-cert
 
 - name: create nginx configuration file
   template:
