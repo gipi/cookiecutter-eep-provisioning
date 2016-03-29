@@ -31,13 +31,13 @@ function failure_msg() {
 }
 
 function webuser_cmd() {
-    ssh -i id_rsa_my_project \
+    ssh -i ${TEMP_DIR}/provision/id_rsa_my_project \
         my_project@127.0.0.1 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \
         "$@"
 }
 
 function webuser_scp_app() {
-    scp -i id_rsa_my_project \
+    scp -i ${TEMP_DIR}/provision/id_rsa_my_project \
         -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \
         "$@" my_project@127.0.0.1:app/
 }
@@ -84,7 +84,7 @@ running_log deploy
 webuser_cmd virtualenv --no-site-packages .virtualenv
 webuser_cmd "source .virtualenv/bin/activate && pip install uwsgi celery redis"
 webuser_scp_app "${DIR}"/app/*
-webuser_scp_app uwsgi.ini
+webuser_scp_app "${TEMP_DIR}/provision/"uwsgi.ini
 # activate the celery daemon
 webuser_cmd sed --in-place '"s/^\(# \)\(attach-daemon2\)/\2/"' app/uwsgi.ini
 webuser_cmd sudo /usr/bin/supervisorctl restart uwsgi_example
