@@ -68,12 +68,6 @@ running_log "creating temporary directory and entering it"
 cd "${TEMP_DIR}"
 
 
-running_log "virtualenv"
-virtualenv --no-site-packages .virtualenv
-set +o nounset # https://github.com/pypa/virtualenv/issues/150
-source .virtualenv/bin/activate
-set -o nounset
-
 running_log cookiecutter
 cookiecutterme
 
