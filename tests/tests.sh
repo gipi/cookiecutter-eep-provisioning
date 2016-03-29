@@ -71,7 +71,7 @@ cd "${TEMP_DIR}"
 running_log cookiecutter
 cookiecutterme
 
-( cd provision && ln -s ansible_deploy_variables ansible_vagrant_variables )
+( cd provision && ln -s ansible_deploy_variables ansible_vagrant_variables && cat ansible_vagrant_variables )
 
 running_log provisioning
 ./provision/bin/configure_machines -l -s
