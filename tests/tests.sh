@@ -104,3 +104,6 @@ UWSGI_SERVICE_STATUS="$(sudo /usr/bin/supervisorctl status uwsgi_example | grep 
 # check for nginx
 sudo service nginx status
 sudo service postgresql status
+
+curl -i http://127.0.0.1/
+curl --insecure -i https://127.0.0.1/
