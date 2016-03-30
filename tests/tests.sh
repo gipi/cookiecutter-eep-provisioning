@@ -97,32 +97,7 @@ webuser_scp_app "${TEMP_DIR}/provision/"uwsgi.ini
 webuser_cmd sed --in-place '"s/^\(# \)\(attach-daemon2\)/\2/"' app/uwsgi.ini
 webuser_cmd sudo /usr/bin/supervisorctl restart uwsgi_example
 
-echo 'temporary directory at '${TEMP_DIR}/provision
-echo go to https://192.168.33.10/
-
-function sshme() {
-    ssh -i id_rsa_my_project my_project@127.0.0.1 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
-}
-
-cat <<EOF
-
- now you are into the provisioning directory, you can use "sshme" to enter
- as the web application user.
-
- You can use "cookiecutterme" to update the generated cookiecutter template.
-
- At the end remember to destroy the vagrant instance with "destroy_provision".
-
-EOF
-
-# reactivate the virtualenv
-set +o nounset # https://github.com/pypa/virtualenv/issues/150
-source "${TEMP_DIR}/.virtualenv/bin/activate"
-set -o nounset
-
-export -f destroy_provision
-export -f cookiecutterme
-export -f sshme
-
-/bin/bash 
+# grep -v fails, so we have to append || true
+UWSGI_SERVICE_STATUS="$(sudo /usr/bin/supervisorctl status uwsgi_example | grep -v RUNNING || true)"
+! test -n "${UWSGI_SERVICE_STATUS}"
 
