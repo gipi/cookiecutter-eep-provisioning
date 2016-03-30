@@ -101,3 +101,6 @@ webuser_cmd sudo /usr/bin/supervisorctl restart uwsgi_example
 UWSGI_SERVICE_STATUS="$(sudo /usr/bin/supervisorctl status uwsgi_example | grep -v RUNNING || true)"
 ! test -n "${UWSGI_SERVICE_STATUS}"
 
+# check for nginx
+sudo service nginx status
+sudo service postgresql status
