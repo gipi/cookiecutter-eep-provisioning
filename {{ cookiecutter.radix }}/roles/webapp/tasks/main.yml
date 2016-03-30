@@ -14,14 +14,14 @@
 - name: change permission on home
   file: path={{ site_web_root }} state=directory owner={{ webapp_username }} mode=755
 
-- name: Creates webroot app
+- name: Creates webroot app directories stucture
   file: path={{ site_web_root }}/{{ item }} state=directory owner={{ webapp_username }}
   with_items:
     - static
     - media
     - logs
 
-- name: configure authorize_keys for {{ webapp_public_key}}
+- name: configure authorize_keys for {{ webapp_public_key }}
   authorized_key: user={{ webapp_username }}
                   key="{{ lookup('file', webapp_public_key ) }}"
 {% endraw %}
