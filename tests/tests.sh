@@ -37,6 +37,7 @@ function webuser_cmd() {
 }
 
 function webuser_scp_app() {
+    echo "copying $@ -> ~/app/"
     scp -i ${TEMP_DIR}/provision/id_rsa_my_project \
         -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -oBatchMode=yes \
         "$@" my_project@127.0.0.1:app/
