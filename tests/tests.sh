@@ -90,6 +90,7 @@ running_log deploy
 #./bin/deploy -i id_rsa_my_project --user my_project -H 192.168.33.10
 webuser_cmd virtualenv --no-site-packages .virtualenv
 webuser_cmd "source .virtualenv/bin/activate && pip install uwsgi celery redis"
+webuser_cmd "mkdir app"
 webuser_scp_app "${DIR}"/app/*
 webuser_scp_app "${TEMP_DIR}/provision/"uwsgi.ini
 # activate the celery daemon
