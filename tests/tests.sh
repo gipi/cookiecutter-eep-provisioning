@@ -60,6 +60,10 @@ readonly COOKIECUTTER_DIR="$(readlink -f ${DIR}/..)"
 readonly TEMP_DIR="$(mktemp -d)"
 readonly TEMP_WEB_ROOT=${TEMP_DIR}/webroot/
 
+# this is necessary otherwise the user can't access the directory webroot
+# https://unix.stackexchange.com/questions/95897/permissions-755-on-home-user
+chmod 755 ${TEMP_DIR}
+
 
 export TEMP_DIR
 export COOKIECUTTER_DIR
