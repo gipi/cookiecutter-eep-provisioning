@@ -32,13 +32,13 @@ function failure_msg() {
 
 function webuser_cmd() {
     ssh -i ${TEMP_DIR}/provision/id_rsa_my_project \
-        my_project@127.0.0.1 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \
+        my_project@127.0.0.1 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -oBatchMode=yes \
         "$@"
 }
 
 function webuser_scp_app() {
     scp -i ${TEMP_DIR}/provision/id_rsa_my_project \
-        -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \
+        -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -oBatchMode=yes \
         "$@" my_project@127.0.0.1:app/
 }
 
