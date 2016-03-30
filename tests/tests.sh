@@ -32,13 +32,13 @@ function failure_msg() {
 
 function webuser_cmd() {
     ssh -i id_rsa_my_project \
-        my_project@127.0.0.1 -p 2222 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \
+        my_project@127.0.0.1 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \
         "$@"
 }
 
 function webuser_scp_app() {
     scp -i id_rsa_my_project \
-        -P 2222 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \
+        -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no \
         "$@" my_project@127.0.0.1:app/
 }
 
@@ -97,7 +97,7 @@ echo 'temporary directory at '${TEMP_DIR}/provision
 echo go to https://192.168.33.10/
 
 function sshme() {
-    ssh -i id_rsa_my_project my_project@127.0.0.1 -p 2222 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
+    ssh -i id_rsa_my_project my_project@127.0.0.1 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
 }
 
 cat <<EOF
