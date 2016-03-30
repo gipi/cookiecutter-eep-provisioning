@@ -3,6 +3,9 @@
 # Script to generate a template with the default values and
 # after having started a Vagrant machine, configures a WSGI
 # web application with a celery task connected to it.
+#
+# The user is not random generated, so if the test fail in
+# an environment you have to delete it
 set -o nounset
 set -o errexit
 set -o pipefail
