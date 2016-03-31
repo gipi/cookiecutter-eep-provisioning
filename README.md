@@ -3,6 +3,8 @@
 This is a strong opinionated template to use with cookiecutter
 in order to provide a project with a provisioning directory.
 
+[![Build Status](https://travis-ci.org/gipi/cookiecutter-eep-provisioning.svg?branch=master)](https://travis-ci.org/gipi/cookiecutter-eep-provisioning)
+
 ## Getting started
 
 Enter into the directory containing the project you need to add
