@@ -2,9 +2,9 @@
 - hosts: all
   roles:
     - { role: common, tags: common }
-    - { role: nginx, tags: nginx }
-    - { role: databases, tags: databases }
     - { role: webapp, tags: webapp }
+{% if cookiecutter.has_webserver == "y" %}    - { role: nginx, tags: nginx }{% endif %}
+{% if cookiecutter.has_database == "y" %}    - { role: databases, tags: databases }{% endif %}
 {% if cookiecutter.has_git == "y" %}    - { role: repo,   tags: repo }{% endif %}
 {% if cookiecutter.has_supervisor == "y" %}    - { role: supervisor,   tags: supervisor }{% endif %}
 {% if cookiecutter.has_redis == "y" %}    - { role: redis ,   tags: redis }{% endif %}

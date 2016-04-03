@@ -4,6 +4,8 @@
     "radix":               "provision",
     "has_vagrant":         "y",
     "has_git":             "n",
+    "has_webserver":       "y",
+    "has_database":        "y",
     "has_supervisor":      "y",
     "has_redis":           "n",
     "site_domain":         "example.com",
