@@ -23,6 +23,8 @@ These are the defined variables
 * ``project_name``: project for which is the provisioning
 * ``repo_name``: like project name but slugified
 * ``radix``: directory where place all the stuffs (default "provision")
+* ``has_database``: configure postgres
+* ``has_webserver``: configure nginx
 * ``has_vagrant``
 * ``has_git``
 * ``has_supervisor``
