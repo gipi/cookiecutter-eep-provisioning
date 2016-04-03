@@ -3,7 +3,7 @@
   roles:
     - { role: common, tags: common }
     - { role: nginx, tags: nginx }
-    - { role: databases, tags: databases }
+{% if cookiecutter.has_database == "y" %}    - { role: databases, tags: databases }{% endif %}
     - { role: webapp, tags: webapp }
 {% if cookiecutter.has_git == "y" %}    - { role: repo,   tags: repo }{% endif %}
 {% if cookiecutter.has_supervisor == "y" %}    - { role: supervisor,   tags: supervisor }{% endif %}
