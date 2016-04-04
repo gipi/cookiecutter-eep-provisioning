@@ -54,6 +54,7 @@ def get_release_filename():
 def get_release_filepath():
     return os.path.join(PROJECT_ROOT_DIR, RELEASES_RELATIVE_PATH_DIR, get_release_filename())
 
+{% if cookiecutter.has_database == "y" %}
 @task
 def dump_db_snapshot(db_name, user):
     remote_tmp_file_path = '/tmp/dump_db.sql' # FIXME: use temporary file
@@ -72,6 +73,8 @@ def load_db_snapshot(db_name, username):
     dump_db_snapshot(db_name, username)
     reset_db()
     load_db(username)
+{% endif %}
+
 
 @task
 def create_release_archive(head='HEAD'):
@@ -341,3 +344,20 @@ def configure_env(envpath='.env', local_copy_path='.remote.env', web_root=None):
     put(local_path=local_copy_path, remote_path=envpath)
 
     os.remove(local_copy_path)
+
+{% if cookiecutter.has_supervisor == "y" %}
+def _do_services(cmd):
+    erun('sudo /usr/bin/supervisorctl {} {{ cookiecutter.site_name }}'.format(cmd))
+
+def restart_services():
+    _do_services('restart')
+
+def stop_services():
+    _do_services('stop')
+
+def start_services():
+    _do_services('start')
+
+def status_services():
+    _do_services('status')
+{% endif %}
