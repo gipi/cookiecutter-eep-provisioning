@@ -2,7 +2,12 @@
 server {
        listen         80;
        server_name    {{ site_domain }};
-       return         301 https://$server_name$request_uri;
+{% if snakeoil %}
+       include snippets/letsencryptauth.conf;
+{% endif %}
+       location / {
+           return         301 https://$server_name$request_uri;
+       }
 }
 
 server {
@@ -12,12 +17,15 @@ server {
         access_log /var/log/nginx/{{ site_domain }}.access.log;
         error_log /var/log/nginx/{{ site_domain }}.error.log;
 
+{% if snakeoil %}
         # this below are certificates to be substituted
         ssl_certificate /etc/ssl/certs/ssl-cert-snakeoil.pem;
         ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
-        #ssl_certificate /etc/ssl/certs/{{ site_domain }}_chain.pem;
-        #ssl_certificate_key /etc/ssl/private/{{ site_domain }};
-
+{% else %}
+        # letsencrypt certificates
+        ssl_certificate /etc/letsencrypt/live/{{ site_domain }}/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/{{ site_domain }}/privkey.pem;
+{% endif %}
         # allow for 2M upload
         client_max_body_size 2M;
 
