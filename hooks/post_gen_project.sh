@@ -17,6 +17,7 @@ test -f "${KEYNAME}" || {
     ssh-keygen -f "${KEYNAME}" -N ""
     cat >> ansible_deploy_variables <<EOF
 webapp_public_key: '${KEYNAME}.pub'
+snakeoil: true
 EOF
 }
 {% endif %}
