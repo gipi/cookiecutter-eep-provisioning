@@ -2,7 +2,7 @@
 server {
        listen         80;
        server_name    {{ site_domain }};
-{% if snakeoil %}
+{% if not snakeoil %}
        include snippets/letsencryptauth.conf;
 {% endif %}
        location / {
