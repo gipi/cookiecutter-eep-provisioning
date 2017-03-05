@@ -1,7 +1,7 @@
 {% raw %}---
 - name: install necessary extra packages ({{ extra_packages|join(', ') }})
   apt: name={{ item }} state=present update_cache=yes cache_valid_time=3600
-  with_items: extra_packages
+  with_items: "{{ extra_packages }}"
   when: extra_packages is defined
 
 # TODO: make configurable
