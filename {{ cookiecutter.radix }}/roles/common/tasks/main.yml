@@ -10,4 +10,11 @@
 #  # locale-gen
 - name: set italian locale
   locale_gen: name=it_IT.UTF-8 state=present
+
+- name: install NTP
+  apt: name=ntp state=present update_cache=yes cache_valid_time=3600
+
+- name: start the NTP service
+  service: name=ntp state=started
+
 {% endraw %}

@@ -84,6 +84,9 @@ running_log provisioning
 ./provision/bin/configure_machines -V
 ./provision/bin/configure_machines -l -s
 
+running_log "check NTP is configured"
+webuser_cmd "ntpq -p"
+
 running_log deploy
 # do a fake deploy
 #pip install fabric
