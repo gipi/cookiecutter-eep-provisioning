@@ -21,12 +21,12 @@ ANSIBLE_EXTRA_ARGS=""
 
 usage() {
     cat <<- EOF
-usage: $0 [-i <inventory>] [-v <variables>] [-h] [-d] [-l] [-s] [-p]
+usage: $0 [-i <inventory>] [-v <variables>] [-h] [-d] [-l] [-s] [-p] [-V]
 EOF
 }
 
 cmdline() {
-    while getopts "hdsplv:i:" OPTION
+    while getopts "hdsplVv:i:" OPTION
     do
          case $OPTION in
          d)
@@ -49,6 +49,9 @@ cmdline() {
             ;;
          p)
             ANSIBLE_EXTRA_ARGS=${ANSIBLE_EXTRA_ARGS}" --ask-become-pass"
+            ;;
+         V)
+            ANSIBLE_EXTRA_ARGS=${ANSIBLE_EXTRA_ARGS}" --version"
             ;;
          i)
             INVENTORY_FILE=$PWD/$OPTARG
