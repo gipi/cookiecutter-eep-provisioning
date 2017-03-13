@@ -49,3 +49,10 @@ The web server listen only ``HTTPS`` (un-encrypted requests are redirect to encr
 It's configured to use self-signed certificate, the real one must be generated and certificate
 and private key be in the correct places (look at ``/etc/nginx/site-available/{{ cookiecutter.site_name }}``).
 {% endif %}
+{% if cookiecutter.has_monitoring == "y" %}
+## Monitoring
+
+For monitoring purpose [diamond](https://diamond.readthedocs.io/en/latest/) is used; one step
+further is to graph the data collected using [graphite](http://graphiteapp.org/).
+
+{% endif %}

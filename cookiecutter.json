@@ -8,6 +8,7 @@
     "has_database":        "y",
     "has_supervisor":      "y",
     "has_redis":           "n",
+    "has_monitoring":      "y",
     "site_domain":         "example.com",
     "site_name":           "example",
     "site_web_root":       "/var/www/{{ cookiecutter.site_name }}",
@@ -15,5 +16,6 @@
     "webapp_public_key":   "",
     "db_version":          "9.4",
     "db_name":             "db_{{ cookiecutter.repo_name }}",
-    "db_user":             "{{cookiecutter.repo_name}}user"
+    "db_user":             "{{cookiecutter.repo_name}}user",
+    "diamond_username":    "diamond"
 }

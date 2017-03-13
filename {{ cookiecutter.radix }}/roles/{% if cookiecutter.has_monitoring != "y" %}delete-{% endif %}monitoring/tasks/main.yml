@@ -1,0 +1,26 @@
+---
+
+- name: create user diamond (without home)
+  user:
+    name="{{ cookiecutter.diamond_username }}"
+    createhome=no
+    shell=/bin/bash
+    comment="Account for monitoring"
+
+- name: create diamond virtualenv
+  become: yes
+  become_user: "{{ cookiecutter.diamond_username }}"
+  pip: name=diamond virtualenv="/tmp/.virtualenv"
+
+- name: create diamond configuration file
+  template:
+    src=diamond.j2.conf
+    dest=/etc/diamond/diamond.conf
+    mode=700
+
+- name: create diamond service script
+  template:
+    src=diamond.j2
+    dest=/etc/init.d/diamond
+    mode=700
+
