@@ -4,10 +4,10 @@ before_install:
 
 language: python
 python:
-  - "2.7"
+  - "3.8"
 
 install:
-  - pip install git+https://github.com/ansible/ansible@devel#egg=ansible
+  - pip3 install git+https://github.com/ansible/ansible@devel#egg=ansible
 
 script:
   - ./tests/tests.sh

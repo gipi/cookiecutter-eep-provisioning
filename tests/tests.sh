@@ -45,8 +45,8 @@ function webuser_scp_app() {
 
 function cookiecutterme() {
     cd "${TEMP_DIR}" # just in case is recalled after the first time
-    pip install cookiecutter
-    python -c 'from cookiecutter.main import cookiecutter;cookiecutter("'${COOKIECUTTER_DIR}'", no_input=True, overwrite_if_exists=True, extra_context={"has_redis": "y", "site_web_root": "'${TEMP_WEB_ROOT}'"});'
+    pip3 install cookiecutter
+    python3 -c 'from cookiecutter.main import cookiecutter;cookiecutter("'${COOKIECUTTER_DIR}'", no_input=True, overwrite_if_exists=True, extra_context={"has_redis": "y", "site_web_root": "'${TEMP_WEB_ROOT}'"});'
     cd -
 }
 
@@ -92,7 +92,7 @@ running_log deploy
 #pip install fabric
 
 #./bin/deploy -i id_rsa_my_project --user my_project -H 192.168.33.10
-webuser_cmd virtualenv --no-site-packages .virtualenv
+webuser_cmd python3 -m venv .virtualenv
 webuser_cmd "source .virtualenv/bin/activate && pip install uwsgi celery redis"
 webuser_cmd "mkdir app"
 webuser_scp_app "${DIR}"/app/*
